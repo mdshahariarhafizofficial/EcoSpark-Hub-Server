@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter = (req: Express.Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+const fileFilter = (req: any, file: any, cb: any) => {
   if (file.fieldname === 'images' || file.fieldname === 'avatar') {
     if (!file.mimetype.startsWith('image/')) {
       return cb(new AppError('Only image files are allowed for images field.', 400));

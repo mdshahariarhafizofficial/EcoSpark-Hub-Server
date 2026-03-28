@@ -31,14 +31,17 @@ export const errorHandler = (
   // Zod Validation Errors
   if (err instanceof ZodError) {
     const formattedErrors: Record<string, string> = {};
-    err.errors.forEach((issue) => {
-      const path = issue.path.join('.');
-      formattedErrors[path] = issue.message;
-    });
+    const zodErr = err as any;
+    if (zodErr.errors && Array.isArray(zodErr.errors)) {
+      zodErr.errors.forEach((issue: any) => {
+        const path = issue.path ? issue.path.join('.') : 'field';
+        formattedErrors[path] = issue.message;
+      });
+    }
 
     return res.status(400).json({
       success: false,
-      message: `Validation failed: ${err.errors[0].message}`,
+      message: zodErr.errors && zodErr.errors.length > 0 ? `Validation failed: ${zodErr.errors[0].message}` : 'Validation failed',
       errors: formattedErrors,
     });
   }

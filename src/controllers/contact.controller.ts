@@ -34,7 +34,7 @@ export const getMessages = async (req: Request, res: Response, next: NextFunctio
 
 export const updateMessageStatus = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const { status } = req.body;
     if (!['NEW', 'READ', 'REPLIED'].includes(status)) {
       throw new AppError('Invalid status', 400);
@@ -49,7 +49,7 @@ export const updateMessageStatus = async (req: Request, res: Response, next: Nex
 
 export const deleteMessage = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     await prisma.contactMessage.delete({ where: { id } });
     res.json({ success: true, message: 'Message deleted' });
   } catch (err) { next(err); }

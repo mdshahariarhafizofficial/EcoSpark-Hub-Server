@@ -78,12 +78,12 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/contact', contactRoutes);
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/health', (req: express.Request, res: express.Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString(), service: 'EcoSpark Hub API - VERIFIED' });
 });
 
 // 404 handler - catch-all for undefined routes
-app.use((req, res) => {
+app.use((req: express.Request, res: express.Response) => {
   res.status(404).json({ success: false, message: 'Route not found' });
 });
 

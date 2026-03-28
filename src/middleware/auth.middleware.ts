@@ -10,6 +10,8 @@ export interface AuthRequest extends Request {
     role: string;
     isActive: boolean;
   };
+  cookies: Record<string, any>;
+  files?: any;
 }
 
 export const authenticate = async (req: AuthRequest, res: Response, next: NextFunction) => {
