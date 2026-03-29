@@ -294,6 +294,29 @@ app.use(morgan('combined', { stream: { write: (msg) => logger.info(msg.trim()) }
 // Static files for uploads - ensuring correct path mapping
 app.use('/uploads', express.static(path.resolve(__dirname, '../../uploads')));
 
+// API Registry - JSON Manifest of available endpoints
+app.get('/api', (req: express.Request, res: express.Response) => {
+  res.json({
+    success: true,
+    message: 'EcoSpark Hub API Registry',
+    version: '1.0.0',
+    endpoints: {
+      auth: '/api/auth',
+      users: '/api/users',
+      ideas: '/api/ideas',
+      categories: '/api/categories',
+      comments: '/api/comments',
+      votes: '/api/votes',
+      payments: '/api/payments',
+      newsletter: '/api/newsletter',
+      bookmarks: '/api/bookmarks',
+      chat: '/api/chat',
+      contact: '/api/contact',
+      health: '/health'
+    }
+  });
+});
+
 // Root Route - Professional Welcome Page
 app.get('/', (req: express.Request, res: express.Response) => {
   res.send(WELCOME_PAGE);
