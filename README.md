@@ -25,6 +25,14 @@
 
 ---
 
+## 📸 API Interface Preview
+
+<p align="center">
+  <img src="https://i.postimg.cc/SQ74z86g/Screenshot-22.png" width="100%" alt="EcoSpark Hub API Welcome Page">
+</p>
+
+---
+
 ## 🏗️ Architectural Vision
 
 **EcoSpark Hub Backend** is engineered for scalability, security, and developer productivity. It leverages a modern **TypeScript**-first approach with **Express 5** and **Prisma ORM**, providing a type-safe foundation for managing the global sustainability marketplace.
