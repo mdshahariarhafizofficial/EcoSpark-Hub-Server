@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../frontend/src/app/icon.svg" width="128" height="128" alt="EcoSpark Hub Logo">
+  <img src="../frontend/public/favicon.png" width="128" height="128" alt="EcoSpark Hub Logo">
 </p>
 
 <h1 align="center">EcoSpark Hub | Backend</h1>
