@@ -63,17 +63,74 @@
 
 ---
 
-## 🛠️ Technical Excellence
+## 🛠️ Technologies Used
 
-| Component | Description |
-| :--- | :--- |
-| **Runtime** | Node.js 18+ / 20+ (LTS) |
-| **Type Safety** | TypeScript 5.x with Strict-Mode |
-| **API Framework** | Express.js 5 / REST Architecture |
-| **Database** | PostgreSQL 16 (Relational DB) |
-| **ORM** | Prisma 5.14 Client & Migrations |
-| **Validation** | Zod (Runtime Data Verification) |
-| **Security** | JWT, bcrypt, Helmet, CORS, Rate-Limit |
+- **Node.js**: Scalable JavaScript runtime built on Chrome's V8 engine, powering the platform's core logic.
+- **Express.js (v5)**: Minimal and flexible web application framework for building secure and scalable RESTful APIs.
+- **PostgreSQL (Neon)**: Serverless relational database for highly available, efficient, and consistent data storage.
+- **Prisma ORM**: Next-generation TypeScript ORM used for type-safe database access, automated migrations, and schema management.
+- **JWT Authentication**: Industry-standard JSON Web Tokens for stateless and secure user session management.
+- **BcryptJS**: Advanced password-based key derivation function for secure credential hashing.
+- **Stripe API**: Global financial infrastructure supporting complex checkout sessions and real-time payment processing.
+- **Multer**: High-performance Node.js middleware for handling file uploads (images and technical blueprints).
+- **Nodemailer**: Comprehensive module for sending enterprise-level transactional emails and newsletters.
+- **Zod**: TypeScript-first runtime schema validation to ensure the integrity of all incoming API payloads.
+
+---
+
+## 🔌 API Endpoints
+
+### 🔐 Auth Routes
+- `POST /api/auth/register`: Create a new user account with hashed credentials.
+- `POST /api/auth/login`: Authenticate user and issue a secure, HTTP-only JWT cookie.
+
+### 💡 Idea Routes
+- `GET /api/ideas`: Fetch a paginated, filtered list of approved ecological blueprints.
+- `GET /api/ideas/:id`: Retrieve detailed technical specifications for a single idea.
+- `POST /api/ideas`: Submit a new ecological proposal (status: `DRAFT`).
+- `PUT /api/ideas/:id`: Update an existing proposal (Author-only permissions).
+- `DELETE /api/ideas/:id`: Permanently remove a blueprint (Author or Admin permissions).
+
+### 🛠️ Admin Routes
+- `PUT /api/ideas/:id/status`: Transition idea states (`APPROVED`, `REJECTED`) with moderation feedback.
+- `GET /api/admin/stats`: High-level platform telemetry for performance tracking.
+
+### 💳 Payment Routes
+- `POST /api/payment/initiate/:id`: Generate a specialized Stripe Checkout Session for a paid blueprint.
+- `POST /api/payment/webhook`: Handle real-time asynchronous payment confirmations from Stripe.
+- `GET /api/payment/success`: Client-side polling endpoint for instant content unlocking.
+
+### 📊 Dashboard Routes
+- `GET /api/dashboard/stats`: Retrieve user-specific metrics for contributions, votes, and activities.
+
+---
+
+## 🔄 Data Flow
+
+The EcoSpark Hub Backend follows a strict request-response lifecycle to ensure data integrity and security:
+
+1. **Request**: Client initiates an HTTP request with an optional JWT.
+2. **Middleware**: JWT is verified, role permissions are checked, and payloads are validated via **Zod**.
+3. **Controller**: Business logic is executed, orchestrating interaction with external services (Stripe/AI).
+4. **Prisma**: The ORM performs type-safe queries to the **PostgreSQL** database.
+5. **DB**: Database state is updated or retrieved reliably.
+6. **Response**: A structured JSON response is returned with appropriate HTTP status codes.
+
+---
+
+## 🔐 Authentication System
+
+- **JWT Usage**: Sessions are stateless. A signed JWT is issued upon login and stored in an **HTTP-only cookie** for maximum security.
+- **Middleware Protection**: Routes are wrapped in `authenticate` and `requireAdmin` wrappers to prevent unauthorized access.
+- **Role-Based Access (RBAC)**: Supports `ADMIN` and `MEMBER` roles with distinct access layers for moderation vs. creation.
+
+---
+
+## 💳 Payment System
+
+- **Stripe Checkout**: Generates unique sessions for every purchase, ensuring secure handling of financial data.
+- **Webhook Verification**: Real-time listeners for `checkout.session.completed` ensure "at-least-once" delivery of purchase records.
+- **Idea Unlocking**: Once a `Purchase` record is atomically created in the DB, the system grants the user persistent read-access to the blueprint.
 
 ---
 
