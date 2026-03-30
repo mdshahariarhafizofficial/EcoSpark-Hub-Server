@@ -251,7 +251,6 @@ export const deleteIdea = async (req: AuthRequest, res: Response, next: NextFunc
     const isAdmin = req.user!.role === 'ADMIN';
     const isAuthor = idea.authorId === req.user!.id;
     if (!isAdmin && !isAuthor) throw new AppError('Unauthorized.', 403);
-    if (!isAdmin && idea.status === 'APPROVED') throw new AppError('Cannot delete an approved idea.', 400);
     await prisma.idea.delete({ where: { id: id } });
     res.json({ success: true, message: 'Idea deleted.' });
   } catch (err) { next(err); }
